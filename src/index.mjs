@@ -1,21 +1,37 @@
-import express, { response } from 'express';
+import express, { query, response } from 'express';
 import { request } from 'http';
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-const mockUsers = [{ id: 1, userName: 'John', displayName: 'John' }];
+const mockUsers = [
+  { id: 1, userName: 'John', displayName: 'John' },
+  { id: 1, userName: 'John', displayName: 'John' },
+  { id: 2, userName: 'John', displayName: 'John' },
+];
 
 app.get('/', (request, response) => {
   response.status(201).send({ msg: 'Hello world!' });
 });
 
 app.get('/api/users', (request, response) => {
-  response.send([
-    { id: 1, userName: 'John', displayName: 'John' },
-    { id: 2, userName: 'John', displayName: 'John' },
-  ]);
+    // thi are the query parameters and the  link to the parameters
+    // http://localhost:3000/api/users?filter=userName&value=g
+    console.log(request.query)
+  console.log('I am runnning');
+  const {
+    query: { filter, value },
+  } = request;
+  
+
+  if (filter && value){
+    console.log('ran too')
+    return response.send(
+      mockUsers.filter((user) => {return user[filter].includes(value)})
+    );}else{
+        return response.send(mockUsers); 
+    }
 });
 
 app.get('/api/users/:id', (request, response) => {
