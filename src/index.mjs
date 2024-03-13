@@ -3,6 +3,8 @@ import { request } from 'http';
 
 const app = express();
 
+app.use(express.json());
+
 const PORT = process.env.PORT || 3000;
 
 const mockUsers = [
@@ -51,7 +53,10 @@ app.get('/api/users/:id', (request, response) => {
 
 app.post('/api/users', (request, response) => {
   console.log(request.body); 
-  response.send(200);
+  const newUser = {id: mockUsers[mockUsers.length - 1].id + 1 , userName: request.body.userName , displayName: request.body.displayName };
+  mockUsers.push(newUser);
+
+  response.status(201).send(newUser);
 });
 
 app.get('/api/products', (request, response) => {
