@@ -9,8 +9,8 @@ const PORT = process.env.PORT || 3000;
 
 const mockUsers = [
   { id: 1, userName: 'John', displayName: 'John' },
-  { id: 1, userName: 'John', displayName: 'John' },
   { id: 2, userName: 'John', displayName: 'John' },
+  { id: 3, userName: 'John', displayName: 'John' },
 ];
 
 app.get('/', (request, response) => {
@@ -52,8 +52,12 @@ app.get('/api/users/:id', (request, response) => {
 });
 
 app.post('/api/users', (request, response) => {
-  console.log(request.body); 
-  const newUser = {id: mockUsers[mockUsers.length - 1].id + 1 , userName: request.body.userName , displayName: request.body.displayName };
+  console.log(request.body);
+  const newUser = {
+    id: mockUsers[mockUsers.length - 1].id + 1,
+    userName: request.body.userName,
+    displayName: request.body.displayName,
+  };
   mockUsers.push(newUser);
 
   response.status(201).send(newUser);
@@ -61,6 +65,20 @@ app.post('/api/users', (request, response) => {
 
 app.get('/api/products', (request, response) => {
   response.send([{ id: 1, name: 'chicken breast' }]);
+});
+
+app.put('/api/users/:id', (request, response) => {
+  const {
+    body,
+    params: { id },
+  } = request;
+  console.log(id);
+  const parsedId = parseInt(id);
+  if (isNaN(parsedId)) return response.sendStatus(400);
+  const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
+  if (findUserIndex === -1) return response.sendStatus(404);
+  mockUsers[findUserIndex] = { id: parsedId, ...body };
+  return response.send(mockUsers).status(200);;
 });
 
 app.listen(PORT, () => {
