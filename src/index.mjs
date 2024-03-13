@@ -16,22 +16,24 @@ app.get('/', (request, response) => {
 });
 
 app.get('/api/users', (request, response) => {
-    // thi are the query parameters and the  link to the parameters
-    // http://localhost:3000/api/users?filter=userName&value=g
-    console.log(request.query)
+  // thi are the query parameters and the  link to the parameters
+  // http://localhost:3000/api/users?filter=userName&value=g
+  console.log(request.query);
   console.log('I am runnning');
   const {
     query: { filter, value },
   } = request;
-  
 
-  if (filter && value){
-    console.log('ran too')
+  if (filter && value) {
+    console.log('ran too');
     return response.send(
-      mockUsers.filter((user) => {return user[filter].includes(value)})
-    );}else{
-        return response.send(mockUsers); 
-    }
+      mockUsers.filter((user) => {
+        return user[filter].includes(value);
+      })
+    );
+  } else {
+    return response.send(mockUsers);
+  }
 });
 
 app.get('/api/users/:id', (request, response) => {
@@ -45,6 +47,11 @@ app.get('/api/users/:id', (request, response) => {
   const findUser = mockUsers.find((user) => user.id === parsedId);
   if (!findUser) return response.sendStatus(404);
   response.send(findUser);
+});
+
+app.post('/api/users', (request, response) => {
+  console.log(request.body); 
+  response.send(200);
 });
 
 app.get('/api/products', (request, response) => {
