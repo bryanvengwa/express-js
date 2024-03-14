@@ -55,15 +55,10 @@ app.get('/api/users', (request, response) => {
   }
 });
 
-app.get('/api/users/:id', (request, response) => {
-  //   console.log(request.params);
-  const parsedId = parseInt(request.params.id);
-  console.log(parsedId);
-  if (isNaN(parsedId)) {
-    return response.status(404).send({ msg: 'Bad request , invalid Id' });
-  }
+app.get('/api/users/:id', resolveIndexByUserId, (request, response) => {
+  const { findUserIndex } = request;
 
-  const findUser = mockUsers.find((user) => user.id === parsedId);
+  const findUser = mockUsers[findUserIndex];
   if (!findUser) return response.sendStatus(404);
   response.send(findUser);
 });
