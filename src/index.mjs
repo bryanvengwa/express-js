@@ -1,5 +1,5 @@
 import express from 'express';
-import { query } from 'express-validator';
+import { query , validationResult } from 'express-validator';
 
 const app = express();
 
@@ -36,26 +36,33 @@ app.get('/', (request, response) => {
   response.status(201).send({ msg: 'Hello world!' });
 });
 
-app.get('/api/users', query('filter').isString().notEmpty(), (request, response) => {
-  console.log(request.query);
-  console.log('I am runnning');
-  
-  console.log(request);
-  const {
-    query: { filter, value },
-  } = request;
+app.get(
+  '/api/users',
+  query('filter').isString().notEmpty(),
+  (request, response) => {
+    // console.log(request['express-validator#contexts']);
+    const result = validationResult(request)
+    console.log(result);
 
-  if (filter && value) {
-    console.log('ran too');
-    return response.send(
-      mockUsers.filter((user) => {
-        return user[filter].includes(value);
-      })
-    );
-  } else {
-    return response.send(mockUsers);
+    console.log('I am runnning');
+
+    console.log(request);
+    const {
+      query: { filter, value },
+    } = request;
+
+    if (filter && value) {
+      console.log('ran too');
+      return response.send(
+        mockUsers.filter((user) => {
+          return user[filter].includes(value);
+        })
+      );
+    } else {
+      return response.send(mockUsers);
+    }
   }
-});
+);
 
 app.get('/api/users/:id', resolveIndexByUserId, (request, response) => {
   const { findUserIndex } = request;
