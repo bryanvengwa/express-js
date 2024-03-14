@@ -23,6 +23,7 @@ const resolveIndexByUserId = function (request, response, next) {
   const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
   if (findUserIndex === -1) return response.sendStatus(404);
   request.findUserIndex = findUserIndex;
+  next();
 };
 
 const mockUsers = [
