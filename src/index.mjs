@@ -91,24 +91,16 @@ app.put('/api/users/:id', resolveIndexByUserId, (request, response) => {
   return response.send(mockUsers).status(200);
 });
 
-app.delete('/api/users/:id', function (req, res) {
-  const {
-    params: { id },
-  } = req;
-  const parsedId = parseInt(id);
-  console.log('delete method run' + id);
-  if (isNaN(parsedId)) return res.sendStatus(404);
-  const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
-  if (findUserIndex === -1) return res.sendStatus(404);
-
+app.delete('/api/users/:id', resolveIndexByUserId, function (req, res) {
+  const { findUserIndex } = req;
   mockUsers.splice(findUserIndex);
   return res.sendStatus(200);
 });
 
 app.patch('/api/users/:id', resolveIndexByUserId, (request, response) => {
-  const {body , findUserIndex} = request;
+  const { body, findUserIndex } = request;
 
-  mockUsers[findUserIndex] = { ...mockUsers[findUserIndex] ,...body };
+  mockUsers[findUserIndex] = { ...mockUsers[findUserIndex], ...body };
   return response.send(mockUsers).status(200);
 });
 
