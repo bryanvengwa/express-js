@@ -18,8 +18,9 @@ app.get('/', (request, response) => {
 });
 
 app.get('/api/users', (request, response) => {
-  // thi are the query parameters and the  link to the parameters
-  // http://localhost:3000/api/users?filter=userName&value=g
+
+
+  
   console.log(request.query);
   console.log('I am runnning');
   const {
@@ -91,7 +92,7 @@ app.patch('/api/users/:id', (request, response) => {
   if (isNaN(parsedId)) return response.sendStatus(400);
   const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
   if (findUserIndex === -1) return response.sendStatus(404);
-  mockUsers[findUserIndex] = { ...mockUsers[findUserIndex], ...body };
+  mockUsers[findUserIndex] = { ...body };
   return response.send(mockUsers).status(200);
 });
 
