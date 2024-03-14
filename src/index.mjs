@@ -18,9 +18,6 @@ app.get('/', (request, response) => {
 });
 
 app.get('/api/users', (request, response) => {
-
-
-  
   console.log(request.query);
   console.log('I am runnning');
   const {
@@ -82,6 +79,20 @@ app.put('/api/users/:id', (request, response) => {
   return response.send(mockUsers).status(200);
 });
 
+app.delete('/api/users/:id', function (req, res) {
+  const {
+    params: { id },
+  } = req;
+  const parsedId = parseInt(id);
+  console.log('delete method run' + id)
+  if (isNaN(parsedId)) return res.sendStatus(404);
+  const findUserIndex =  mockUsers.findIndex(user => user.id ===  parsedId );
+  if (findUserIndex === -1) return res.sendStatus(404);
+  
+  mockUsers.splice(findUserIndex);
+  return res.sendStatus(200);
+});
+
 app.patch('/api/users/:id', (request, response) => {
   const {
     body,
@@ -95,7 +106,6 @@ app.patch('/api/users/:id', (request, response) => {
   mockUsers[findUserIndex] = { ...body };
   return response.send(mockUsers).status(200);
 });
-
 
 app.listen(PORT, () => {
   console.log(`running on port ${PORT}`);
