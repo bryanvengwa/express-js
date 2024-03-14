@@ -15,7 +15,6 @@ const PORT = process.env.PORT || 3000;
 
 const resolveIndexByUserId = function (request, response, next) {
   const {
-    body,
     params: { id },
   } = request;
   console.log(id);
@@ -23,6 +22,7 @@ const resolveIndexByUserId = function (request, response, next) {
   if (isNaN(parsedId)) return response.sendStatus(400);
   const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
   if (findUserIndex === -1) return response.sendStatus(404);
+  request.findUserIndex = findUserIndex;
 };
 
 const mockUsers = [
@@ -83,17 +83,10 @@ app.get('/api/products', (request, response) => {
   response.send([{ id: 1, name: 'chicken breast' }]);
 });
 
-app.put('/api/users/:id', (request, response) => {
-  const {
-    body,
-    params: { id },
-  } = request;
-  console.log(id);
-  const parsedId = parseInt(id);
-  if (isNaN(parsedId)) return response.sendStatus(400);
-  const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
-  if (findUserIndex === -1) return response.sendStatus(404);
-  mockUsers[findUserIndex] = { id: parsedId, ...body };
+app.put('/api/users/:id', resolveIndexByUserId, (request, response) => {
+  const {  body, findUserIndex } = request;
+
+  mockUsers[findUserIndex] = { id:findUserIndex, ...body };
   return response.send(mockUsers).status(200);
 });
 
