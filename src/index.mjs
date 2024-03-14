@@ -3,7 +3,13 @@ import { request } from 'http';
 
 const app = express();
 
+const loggingMiddleware = function (req, res, next) {
+  console.log(`${req.method} - ${req.url} `);
+  next();
+};
+
 app.use(express.json());
+app.use(loggingMiddleware);
 
 const PORT = process.env.PORT || 3000;
 
@@ -84,11 +90,11 @@ app.delete('/api/users/:id', function (req, res) {
     params: { id },
   } = req;
   const parsedId = parseInt(id);
-  console.log('delete method run' + id)
+  console.log('delete method run' + id);
   if (isNaN(parsedId)) return res.sendStatus(404);
-  const findUserIndex =  mockUsers.findIndex(user => user.id ===  parsedId );
+  const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
   if (findUserIndex === -1) return res.sendStatus(404);
-  
+
   mockUsers.splice(findUserIndex);
   return res.sendStatus(200);
 });
