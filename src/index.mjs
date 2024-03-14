@@ -1,5 +1,5 @@
-import express, { query, response } from 'express';
-import { request } from 'http';
+import express from 'express';
+import { query } from 'express-validator';
 
 const app = express();
 
@@ -36,9 +36,11 @@ app.get('/', (request, response) => {
   response.status(201).send({ msg: 'Hello world!' });
 });
 
-app.get('/api/users', (request, response) => {
+app.get('/api/users', query('filter').isString().notEmpty(), (request, response) => {
   console.log(request.query);
   console.log('I am runnning');
+  
+  console.log(request);
   const {
     query: { filter, value },
   } = request;
@@ -71,7 +73,7 @@ app.post('/api/users', (request, response) => {
     displayName: request.body.displayName,
   };
   mockUsers.push(newUser);
-           
+
   response.status(201).send(newUser);
 });
 
