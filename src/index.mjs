@@ -71,7 +71,7 @@ app.post('/api/users', (request, response) => {
     displayName: request.body.displayName,
   };
   mockUsers.push(newUser);
-
+           
   response.status(201).send(newUser);
 });
 
