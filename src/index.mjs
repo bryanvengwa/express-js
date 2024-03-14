@@ -13,6 +13,18 @@ app.use(loggingMiddleware);
 
 const PORT = process.env.PORT || 3000;
 
+const resolveIndexByUserId = function (request, response, next) {
+  const {
+    body,
+    params: { id },
+  } = request;
+  console.log(id);
+  const parsedId = parseInt(id);
+  if (isNaN(parsedId)) return response.sendStatus(400);
+  const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
+  if (findUserIndex === -1) return response.sendStatus(404);
+};
+
 const mockUsers = [
   { id: 1, userName: 'John', displayName: 'John' },
   { id: 2, userName: 'John', displayName: 'John' },
