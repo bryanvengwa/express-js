@@ -85,9 +85,9 @@ app.get('/api/products', (request, response) => {
 });
 
 app.put('/api/users/:id', resolveIndexByUserId, (request, response) => {
-  const {  body, findUserIndex } = request;
+  const { body, findUserIndex } = request;
 
-  mockUsers[findUserIndex] = { id:findUserIndex, ...body };
+  mockUsers[findUserIndex] = { id: findUserIndex, ...body };
   return response.send(mockUsers).status(200);
 });
 
@@ -105,17 +105,10 @@ app.delete('/api/users/:id', function (req, res) {
   return res.sendStatus(200);
 });
 
-app.patch('/api/users/:id', (request, response) => {
-  const {
-    body,
-    params: { id },
-  } = request;
-  console.log(id);
-  const parsedId = parseInt(id);
-  if (isNaN(parsedId)) return response.sendStatus(400);
-  const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
-  if (findUserIndex === -1) return response.sendStatus(404);
-  mockUsers[findUserIndex] = { ...body };
+app.patch('/api/users/:id', resolveIndexByUserId, (request, response) => {
+  const {body , findUserIndex} = request;
+
+  mockUsers[findUserIndex] = { ...mockUsers[findUserIndex] ,...body };
   return response.send(mockUsers).status(200);
 });
 
