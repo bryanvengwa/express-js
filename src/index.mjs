@@ -4,7 +4,7 @@ import { query , validationResult } from 'express-validator';
 const app = express();
 
 const loggingMiddleware = function (req, res, next) {
-  console.log(`${req.method} - ${req.url} `);
+  // console.log(`${req.method} - ${req.url} `);
   next();
 };
 
@@ -17,7 +17,6 @@ const resolveIndexByUserId = function (request, response, next) {
   const {
     params: { id },
   } = request;
-  console.log(id);
   const parsedId = parseInt(id);
   if (isNaN(parsedId)) return response.sendStatus(400);
   const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
@@ -42,17 +41,15 @@ app.get(
   (request, response) => {
     // console.log(request['express-validator#contexts']);
     const result = validationResult(request)
-    console.log(result);
+    console.log(result, "here is the result");
 
     console.log('I am runnning');
 
-    console.log(request);
     const {
       query: { filter, value },
     } = request;
 
     if (filter && value) {
-      console.log('ran too');
       return response.send(
         mockUsers.filter((user) => {
           return user[filter].includes(value);
@@ -73,7 +70,7 @@ app.get('/api/users/:id', resolveIndexByUserId, (request, response) => {
 });
 
 app.post('/api/users', (request, response) => {
-  console.log(request.body);
+  // console.log(request.body);
   const newUser = {
     id: mockUsers[mockUsers.length - 1].id + 1,
     userName: request.body.userName,
