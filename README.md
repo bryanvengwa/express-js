@@ -49,3 +49,5 @@ npm test
 Contributing
 Contributions are welcome! Feel free to submit pull requests or open issues for any improvements or feature requests.
 
+
+to carry data from one middleware to another youa attach it to the the request object and access it in the onther or rather next middleware
