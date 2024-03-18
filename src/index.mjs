@@ -1,5 +1,6 @@
 import express from 'express';
-import { query , validationResult } from 'express-validator';
+import { query } from 'express-validator';
+
 
 const app = express();
 
