@@ -1,7 +1,6 @@
 import express from 'express';
 import { query } from 'express-validator';
 
-
 const app = express();
 
 const loggingMiddleware = function (req, res, next) {
@@ -38,13 +37,8 @@ app.get('/', (request, response) => {
 
 app.get(
   '/api/users',
-  query('filter').isString().notEmpty(),
+query('filter').isString().isEmpty(),
   (request, response) => {
-    // console.log(request['express-validator#contexts']);
-    const result = validationResult(request)
-    console.log(result, "here is the result");
-
-    console.log('I am runnning');
 
     const {
       query: { filter, value },
