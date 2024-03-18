@@ -1,5 +1,5 @@
 import express from 'express';
-import { query } from 'express-validator';
+import { query, validationResult } from 'express-validator';
 
 const app = express();
 
@@ -37,9 +37,10 @@ app.get('/', (request, response) => {
 
 app.get(
   '/api/users',
-query('filter').isString().isEmpty(),
+  query('filter').isString().isEmpty() ,
   (request, response) => {
-
+    const result = validationResult(request);
+    console.log(result);
     const {
       query: { filter, value },
     } = request;
