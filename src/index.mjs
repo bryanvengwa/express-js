@@ -1,12 +1,7 @@
 import express from 'express';
 import { createUserValidationSchema } from './utils/validationSchemas.mjs';
-import {
-  body,
-  matchedData,
-  query,
-  validationResult,
-  checkSchema,
-} from 'express-validator';
+import { matchedData, validationResult, checkSchema } from 'express-validator';
+
 import usersRouter from './routes/users.mjs';
 
 const app = express();
@@ -18,6 +13,7 @@ const loggingMiddleware = function (req, res, next) {
 
 app.use(express.json());
 app.use(loggingMiddleware);
+app.use(usersRouter);
 
 const PORT = process.env.PORT || 3000;
 
@@ -33,11 +29,9 @@ const resolveIndexByUserId = function (request, response, next) {
   next();
 };
 
-
 app.get('/', (request, response) => {
   response.status(201).send({ msg: 'Hello world!' });
 });
-
 
 app.get('/api/users/:id', resolveIndexByUserId, (request, response) => {
   const { findUserIndex } = request;
