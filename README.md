@@ -57,3 +57,8 @@ query
   query('filter').isString().notEmpty().isLength().withMessage(''),
 
 the withMessage function is use to set the message for the previous function call
+
+
+    const result = validationResult(request)
+resul.isEmpty()
+it returns true is the array of errors has a value

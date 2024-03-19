@@ -80,7 +80,10 @@ app.post(
     .isString()
     .withMessage('username should be a string'),
   (request, response) => {
-    // console.log(request.body);
+    const result = validationResult(request);
+    console.log(result);
+    if (!result.isEmpty())
+      return response.status(400).send({ errors: result.errors });
     const newUser = {
       id: mockUsers[mockUsers.length - 1].id + 1,
       userName: request.body.userName,
