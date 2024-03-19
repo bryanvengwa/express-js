@@ -1,5 +1,12 @@
 import express from 'express';
-import { body, matchedData, query, validationResult, checkSchema } from 'express-validator';
+import { createUserValidationSchema } from './utils/validationSchemas.mjs';
+import {
+  body,
+  matchedData,
+  query,
+  validationResult,
+  checkSchema,
+} from 'express-validator';
 
 const app = express();
 
@@ -72,7 +79,7 @@ app.get('/api/users/:id', resolveIndexByUserId, (request, response) => {
 
 app.post(
   '/api/users',
-
+  checkSchema(createUserValidationSchema),
   (request, response) => {
     const result = validationResult(request);
     console.log(result);
