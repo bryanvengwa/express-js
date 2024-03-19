@@ -41,7 +41,7 @@ router.get(
   
     const findUser = mockUsers[findUserIndex];
     if (!findUser) return response.sendStatus(404);
-    response.send(findUser);
+ return   response.send(findUser);
   });
   
  router.post(

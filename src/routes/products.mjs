@@ -5,7 +5,7 @@ const router = Router();
 
 
 router.get('/api/products', (request, response) => {
-    response.send([{ id: 1, name: 'chicken breast' }]);
+  return  response.send([{ id: 1, name: 'chicken breast' }]);
   });
   
 export default router;

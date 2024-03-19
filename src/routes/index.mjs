@@ -7,4 +7,4 @@ const router = Router();
 router.use(usersRouter);
 router.use(productsRouter);
 
-export default Router;
+export default router;
