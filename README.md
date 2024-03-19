@@ -49,18 +49,16 @@ npm test
 Contributing
 Contributions are welcome! Feel free to submit pull requests or open issues for any improvements or feature requests.
 
-
 to carry data from one middleware to another youa attach it to the the request object and access it in the onther or rather next middleware
 
-
 query
-  query('filter').isString().notEmpty().isLength().withMessage(''),
+query('filter').isString().notEmpty().isLength().withMessage(''),
 
 the withMessage function is use to set the message for the previous function call
 
-
     const result = validationResult(request)
+
 resul.isEmpty()
 it returns true is the array of errors has a value
 
-data used to update the database should come from the express validator
+data used to update the database should come from the express validator and this is achieved using the macthed function that ships with express-validator
