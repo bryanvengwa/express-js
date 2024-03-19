@@ -7,6 +7,7 @@ import {
   validationResult,
   checkSchema,
 } from 'express-validator';
+import usersRouter from './routes/users.mjs';
 
 const app = express();
 
@@ -42,32 +43,6 @@ app.get('/', (request, response) => {
   response.status(201).send({ msg: 'Hello world!' });
 });
 
-app.get(
-  '/api/users',
-  query('filter')
-    .isString()
-    .notEmpty()
-    .withMessage('must not be empty')
-    .isLength()
-    .withMessage('Must be at least 3 to 10 characters'),
-  (request, response) => {
-    const result = validationResult(request);
-    console.log(result);
-    const {
-      query: { filter, value },
-    } = request;
-
-    if (filter && value) {
-      return response.send(
-        mockUsers.filter((user) => {
-          return user[filter].includes(value);
-        })
-      );
-    } else {
-      return response.send(mockUsers);
-    }
-  }
-);
 
 app.get('/api/users/:id', resolveIndexByUserId, (request, response) => {
   const { findUserIndex } = request;
