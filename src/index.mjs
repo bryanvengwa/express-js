@@ -84,7 +84,7 @@ app.post(
     console.log(result);
     if (!result.isEmpty())
       return response.status(400).send({ errors: result.errors });
-    const data = matchedData(request)
+    const data = matchedData(request);
 
     const newUser = {
       id: mockUsers[mockUsers.length - 1].id + 1,
