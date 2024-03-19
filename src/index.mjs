@@ -1,5 +1,5 @@
 import express from 'express';
-import { query, validationResult } from 'express-validator';
+import { body, query, validationResult } from 'express-validator';
 
 const app = express();
 
@@ -37,7 +37,12 @@ app.get('/', (request, response) => {
 
 app.get(
   '/api/users',
-  query('filter').isString().notEmpty().withMessage('must not be empty').isLength().withMessage('Must be at least 3 to 10 characters'),
+  query('filter')
+    .isString()
+    .notEmpty()
+    .withMessage('must not be empty')
+    .isLength()
+    .withMessage('Must be at least 3 to 10 characters'),
   (request, response) => {
     const result = validationResult(request);
     console.log(result);
@@ -65,17 +70,27 @@ app.get('/api/users/:id', resolveIndexByUserId, (request, response) => {
   response.send(findUser);
 });
 
-app.post('/api/users', (request, response) => {
-  // console.log(request.body);
-  const newUser = {
-    id: mockUsers[mockUsers.length - 1].id + 1,
-    userName: request.body.userName,
-    displayName: request.body.displayName,
-  };
-  mockUsers.push(newUser);
+app.post(
+  '/api/users',
+  body('userName')
+    .notEmpty()
+    .withMessage('userName cannot be empty')
+    .isLength({ min: 5, max: 32 })
+    .withMessage('username should be between 5-10 messages')
+    .isString()
+    .withMessage('username should be a string'),
+  (request, response) => {
+    // console.log(request.body);
+    const newUser = {
+      id: mockUsers[mockUsers.length - 1].id + 1,
+      userName: request.body.userName,
+      displayName: request.body.displayName,
+    };
+    mockUsers.push(newUser);
 
-  response.status(201).send(newUser);
-});
+    response.status(201).send(newUser);
+  }
+);
 
 app.get('/api/products', (request, response) => {
   response.send([{ id: 1, name: 'chicken breast' }]);
