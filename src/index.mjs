@@ -37,7 +37,7 @@ app.get('/', (request, response) => {
 
 app.get(
   '/api/users',
-  query('filter').isString().notEmpty().isLength().withMessage(''),
+  query('filter').isString().notEmpty().withMessage('must not be empty').isLength().withMessage('Must be at least 3 to 10 characters'),
   (request, response) => {
     const result = validationResult(request);
     console.log(result);
