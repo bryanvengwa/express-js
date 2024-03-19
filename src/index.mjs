@@ -37,7 +37,7 @@ app.get('/', (request, response) => {
 
 app.get(
   '/api/users',
-  query('filter').isString().isEmpty() ,
+  query('filter').isString().notEmpty().isLength().withMessage(''),
   (request, response) => {
     const result = validationResult(request);
     console.log(result);

@@ -51,3 +51,9 @@ Contributions are welcome! Feel free to submit pull requests or open issues for 
 
 
 to carry data from one middleware to another youa attach it to the the request object and access it in the onther or rather next middleware
+
+
+query
+  query('filter').isString().notEmpty().isLength().withMessage(''),
+
+the withMessage function is use to set the message for the previous function call
