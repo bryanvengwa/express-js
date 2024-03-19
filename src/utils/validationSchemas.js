@@ -5,9 +5,17 @@ export const createUserValidationSchema = {
         min: 5,
         max: 32,
       },
-      errorMessage: 'username should be between 5-10 messages',
+      errorMessage:
+        'username must be at least 5 characters long and not more than 32 characters long',
     },
   },
-  notEmpty: true,
-  isString: true,
+  notEmpty: {
+    errorMessage: 'username cannot be empty',
+  },
+  isString: {
+    errorMessage: 'username must be a string',
+  },
+  displayName:{
+    notEmpty:true,
+  }
 };
