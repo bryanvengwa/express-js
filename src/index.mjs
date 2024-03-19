@@ -1,5 +1,5 @@
 import express from 'express';
-import { body, matchedData, query, validationResult } from 'express-validator';
+import { body, matchedData, query, validationResult, checkSchema } from 'express-validator';
 
 const app = express();
 
