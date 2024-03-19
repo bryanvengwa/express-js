@@ -62,3 +62,5 @@ the withMessage function is use to set the message for the previous function cal
     const result = validationResult(request)
 resul.isEmpty()
 it returns true is the array of errors has a value
+
+data used to update the database should come from the express validator
