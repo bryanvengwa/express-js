@@ -16,9 +16,10 @@ app.use(routes);
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (request, response) => {
-  // respo
-  console.log('index function ran');
+  console.log(request.headers.cookie)
+  response.cookie('hello', 'world', {maxAge:60000 * 60 * 60});
   return response.status(201).send({ msg: 'Hello world!' });
+  
 });
 
 app.listen(PORT, () => {
