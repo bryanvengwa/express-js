@@ -2,22 +2,11 @@ import { Router } from 'express';
 import { matchedData, query,validationResult, checkSchema } from 'express-validator';
 import { mockUsers ,  } from '../utils/constants.mjs';
 import { createUserValidationSchema } from '../utils/validationSchemas.mjs';
-
+import { resolveIndexByUserId } from '../utils/middlewares.mjs';
 
 
 const router = Router();
-const resolveIndexByUserId = function (request, response, next) {
-    const {
-      params: { id },
-    } = request;
-    const parsedId = parseInt(id);
-    if (isNaN(parsedId)) return response.sendStatus(400);
-    const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
-    if (findUserIndex === -1) return response.sendStatus(404);
-    request.findUserIndex = findUserIndex;
-    next();
-  };
-  
+
 
 
 router.get(
