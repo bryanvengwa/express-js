@@ -17,74 +17,17 @@ app.use(usersRouter);
 
 const PORT = process.env.PORT || 3000;
 
-const resolveIndexByUserId = function (request, response, next) {
-  const {
-    params: { id },
-  } = request;
-  const parsedId = parseInt(id);
-  if (isNaN(parsedId)) return response.sendStatus(400);
-  const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
-  if (findUserIndex === -1) return response.sendStatus(404);
-  request.findUserIndex = findUserIndex;
-  next();
-};
 
 app.get('/', (request, response) => {
   response.status(201).send({ msg: 'Hello world!' });
 });
 
-app.get('/api/users/:id', resolveIndexByUserId, (request, response) => {
-  const { findUserIndex } = request;
-
-  const findUser = mockUsers[findUserIndex];
-  if (!findUser) return response.sendStatus(404);
-  response.send(findUser);
-});
-
-app.post(
-  '/api/users',
-  checkSchema(createUserValidationSchema),
-  (request, response) => {
-    const result = validationResult(request);
-    console.log(result);
-    if (!result.isEmpty())
-      return response.status(400).send({ errors: result.errors });
-    const data = matchedData(request);
-
-    const newUser = {
-      id: mockUsers[mockUsers.length - 1].id + 1,
-      userName: request.data.userName,
-      displayName: request.data.displayName,
-    };
-    mockUsers.push(newUser);
-
-    response.status(201).send(newUser);
-  }
-);
 
 app.get('/api/products', (request, response) => {
   response.send([{ id: 1, name: 'chicken breast' }]);
 });
 
-app.put('/api/users/:id', resolveIndexByUserId, (request, response) => {
-  const { body, findUserIndex } = request;
 
-  mockUsers[findUserIndex] = { id: findUserIndex, ...body };
-  return response.send(mockUsers).status(200);
-});
-
-app.delete('/api/users/:id', resolveIndexByUserId, function (req, res) {
-  const { findUserIndex } = req;
-  mockUsers.splice(findUserIndex);
-  return res.sendStatus(200);
-});
-
-app.patch('/api/users/:id', resolveIndexByUserId, (request, response) => {
-  const { body, findUserIndex } = request;
-
-  mockUsers[findUserIndex] = { ...mockUsers[findUserIndex], ...body };
-  return response.send(mockUsers).status(200);
-});
 
 app.listen(PORT, () => {
   console.log(`running on port ${PORT}`);
