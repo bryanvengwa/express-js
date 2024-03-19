@@ -6,7 +6,7 @@ export const createUserValidationSchema = {
         max: 32,
       },
       errorMessage:
-        'username must be at least 5 characters long and not more than 32 characters long',
+        'username must be at least 6 characters long and not more than 32 characters long',
     },
   },
   notEmpty: {

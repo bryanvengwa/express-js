@@ -62,3 +62,6 @@ resul.isEmpty()
 it returns true is the array of errors has a value
 
 data used to update the database should come from the express validator and this is achieved using the macthed function that ships with express-validator
+
+
+refactoring of the query validator to a validation schema
