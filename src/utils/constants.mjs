@@ -1,4 +1,4 @@
-const mockUsers = [
+export const mockUsers = [
   { id: 1, userName: 'John', displayName: 'John' },
   { id: 2, userName: 'Alice', displayName: 'Alice Smith' },
   { id: 3, userName: 'Bob', displayName: 'Bob Johnson' },
