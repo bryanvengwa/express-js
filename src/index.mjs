@@ -33,11 +33,6 @@ const resolveIndexByUserId = function (request, response, next) {
   next();
 };
 
-const mockUsers = [
-  { id: 1, userName: 'John', displayName: 'John' },
-  { id: 2, userName: 'John', displayName: 'John' },
-  { id: 3, userName: 'John', displayName: 'John' },
-];
 
 app.get('/', (request, response) => {
   response.status(201).send({ msg: 'Hello world!' });
