@@ -72,13 +72,7 @@ app.get('/api/users/:id', resolveIndexByUserId, (request, response) => {
 
 app.post(
   '/api/users',
-  body('userName')
-    .notEmpty()
-    .withMessage('userName cannot be empty')
-    .isLength({ min: 5, max: 32 })
-    .withMessage('username should be between 5-10 messages')
-    .isString()
-    .withMessage('username should be a string'),
+
   (request, response) => {
     const result = validationResult(request);
     console.log(result);
