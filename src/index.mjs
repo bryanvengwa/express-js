@@ -1,5 +1,6 @@
 import express from 'express';
 import routes from './routes/index.mjs';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
