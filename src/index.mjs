@@ -2,7 +2,6 @@ import express from 'express';
 import routes from './routes/index.mjs';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-import { body } from 'express-validator';
 import { mockUsers } from './utils/constants.mjs';
 
 const app = express();
