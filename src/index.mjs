@@ -59,6 +59,18 @@ app.post('/api/auth/status', (request, response) => {
     : response.status(401).send({ msg: 'user not authenticated' });
 });
 
+app.post('/api/cart', (request, response) => {
+  if (!request.session.user) return response.sendStatus(401);
+  const { body: item } = request;
+  const { cart } = request.session;
+  if (cart) {
+    cart.push(item);
+  } else {
+    request.session.cart = [item];
+  }
+  return response.status(201).send(item);
+});
+
 app.listen(PORT, () => {
   console.log(`running on port ${PORT}`);
 });
