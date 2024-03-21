@@ -43,10 +43,11 @@ app.get('/', (request, response) => {
 
 app.post('api/auth', (request, response) => {
   const {
-    body: { userName },
+    body: { userName, password },
   } = request;
   const findUser = mockUsers.find((user) => user.userName === userName);
   if (!findUser) return response.status(401).send({ msg: 'BAD CREDENTIALS ' });
+  if(findUser.password === password) return response.status(401).send({ msg: 'invalid password' });
 });
 
 app.listen(PORT, () => {
