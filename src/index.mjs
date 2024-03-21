@@ -41,14 +41,15 @@ app.get('/', (request, response) => {
   return response.status(201).send({ msg: 'Hello world!' });
 });
 
-app.post('api/auth', (request, response) => {
+app.post('/api/auth', (request, response) => {
   const {
     body: { userName, password },
   } = request;
   const findUser = mockUsers.find((user) => user.userName === userName);
+  console.log(findUser)
   if (!findUser) return response.status(401).send({ msg: 'BAD CREDENTIALS ' });
-  if (findUser.password === password)
-    return response.status(401).send({ msg: 'invalid password' });
+  if (!findUser.password === password)
+    return response.status(401).send({ msg: `invalid password ${password}` });
   request.session.user = findUser;
   return response.status(200).send(findUser);
 });

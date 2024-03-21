@@ -8,5 +8,6 @@ export const mockUsers = [
   { id: 7, userName: 'David', displayName: 'David Wilson', password: 'david1234' },
   { id: 8, userName: 'Emma', displayName: 'Emma Taylor', password: 'emma5678' },
   { id: 9, userName: 'James', displayName: 'James Rodriguez', password: 'jamesr0dr1guez' },
-  { id: 10, userName: 'Olivia', displayName: 'Olivia Martinez', password: 'oliviaM!2024' },
+  { id: 10, userName: 'password', displayName: 'Olivia Martinez', password: 'password' },
+  { id: 11, userName: 'bryan', displayName: 'bmvengwa', password:'password' },
 ];
