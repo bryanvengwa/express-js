@@ -38,9 +38,6 @@ const PORT = process.env.PORT || 3000;
 
 app.get('/', (request, response) => {
   response.cookie('hello', 'world', { maxAge: 60000 * 60 * 60, signed: true });
-  console.log(request.session);
-  console.log(request.sessionID);
-  console.log(request.session.id);
   request.session.visited = true;
 
   return response.status(201).send({ msg: 'Hello world!' });
