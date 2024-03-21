@@ -27,6 +27,9 @@ app.use(
     },
   })
 );
+
+// passport  has to be initalized after registration of session and before registration of routes
+app.use(passport.initialize());
 app.use(routes);
 
 const PORT = process.env.PORT || 3000;
