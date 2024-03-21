@@ -46,7 +46,7 @@ app.post('/api/auth', (request, response) => {
     body: { userName, password },
   } = request;
   const findUser = mockUsers.find((user) => user.userName === userName);
-  console.log(findUser)
+  console.log(findUser);
   if (!findUser) return response.status(401).send({ msg: 'BAD CREDENTIALS ' });
   if (!findUser.password === password)
     return response.status(401).send({ msg: `invalid password ${password}` });
