@@ -65,3 +65,38 @@ data used to update the database should come from the express validator and this
 
 
 refactoring of the query validator to a validation schema
+
+app.post('/api/auth', (request, response) => {
+  const {
+    body: { userName, password },
+  } = request;
+  const findUser = mockUsers.find((user) => user.userName === userName);
+  console.log(findUser);
+  if (!findUser) return response.status(401).send({ msg: 'BAD CREDENTIALS ' });
+  if (!findUser.password === password)
+    return response.status(401).send({ msg: `invalid password ${password}` });
+  request.session.user = findUser;
+  return response.status(200).send(findUser);
+});
+app.post('/api/auth/status', (request, response) => {
+  return request.session.user
+    ? response.status(200).send(request.session.user)
+    : response.status(401).send({ msg: 'user not authenticated' });
+});
+
+app.post('/api/cart', (request, response) => {
+  if (!request.session.user) return response.sendStatus(401);
+  const { body: item } = request;
+  const { cart } = request.session;
+  if (cart) {
+    cart.push(item);
+  } else {
+    request.session.cart = [item];
+  }
+  return response.status(201).send(item);
+});
+
+app.get('/api/cart', (request, response) => {
+  if (!request.session.user) return response.sendStatus(401);
+  return response.send(request.session.cart ?? []);
+});
