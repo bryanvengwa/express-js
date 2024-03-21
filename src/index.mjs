@@ -14,14 +14,25 @@ const loggingMiddleware = function (req, res, next) {
 app.use(express.json());
 app.use(loggingMiddleware);
 app.use(cookieParser('helloworld'));
+app.use(session({
+  secret: 'bryanvengwa',
+  // this is ideal to be saved to false
+  saveUninitialized:false,
+  resave:false,
+  cookie:{
+    maxAge:60000 * 60 * 60 * 24 
+  }
+}));
 app.use(routes);
 
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (request, response) => {
   response.cookie('hello', 'world', { maxAge: 60000 * 60 * 60, signed: true });
-  console.log(request.headers.cookie);
-  console.log(request.cookies);
+  console.log(request.session)
+  console.log(request.sessionID)
+  console.log(request.session.id)
+  request.session.visited = true;
 
   return response.status(201).send({ msg: 'Hello world!' });
 });
