@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { response } from 'express';
 import routes from './routes/index.mjs';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
@@ -42,6 +42,10 @@ app.get('/', (request, response) => {
 
   return response.status(201).send({ msg: 'Hello world!' });
 });
+
+app.post('/api/auth', passport.authenticate('local') , (request, response)=>{
+  console.log('code ran')
+} )
 
 app.listen(PORT, () => {
   console.log(`running on port ${PORT}`);
