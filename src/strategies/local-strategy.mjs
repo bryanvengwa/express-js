@@ -2,6 +2,10 @@ import passport from 'passport';
 import { Strategy } from 'passport-local';
 import { mockUsers } from '../utils/constants.mjs';
 
+passport.serializeUser(()=>{
+    
+})
+
 export default passport.use(
   new Strategy({usernameField:'userName'},(username, password, done) => {
     console.log(`Password : ${password}`)
@@ -15,7 +19,7 @@ export default passport.use(
     } catch (error) {
       done(error, null);
     }
+
   })
 );
 
-console.log('strategy file included')

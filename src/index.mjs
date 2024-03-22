@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import { mockUsers } from './utils/constants.mjs';
 import passport from 'passport';
-import './strategies/local-strategy.mjs'
+import './strategies/local-strategy.mjs';
 
 const app = express();
 
@@ -43,9 +43,9 @@ app.get('/', (request, response) => {
   return response.status(201).send({ msg: 'Hello world!' });
 });
 
-app.post('/api/auth', passport.authenticate('local') , (request, response)=>{
-  console.log('code ran')
-} )
+app.post('/api/auth', passport.authenticate('local'), (request, response) => {
+  console.log('code ran');
+});
 
 app.listen(PORT, () => {
   console.log(`running on port ${PORT}`);
